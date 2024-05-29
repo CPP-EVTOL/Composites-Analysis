@@ -12,6 +12,6 @@ This is a script that uses "Classical Lamination Theory" to find the strains and
 [-45,45,90] contains bending/axial, axial/torsion, and some torsion/bending coupling.
 As an input, this script takes the layup schedule (orientation of each lamina), the thickness of each lamina, the material of each lamina, and the loading on the laminate.
 
-compositePanelStability.m
+FlatPanelStability.m
 
 This is a script that is used to find the buckling allowable of a flat panel. It works for panels in uniaxial compression and/or shear and with the unloaded edges either both clamped or both simply supported. Depending on the panel dimensions given, you may have to manually select a Kc and Ks value from figures 8.2.6 and 8.2.7. When prompted, click the y value on the plot corresponding to your edge constraint (see the edge cases on the figure, find the line associated with either case A or C, and click where it intersects with the red dotted line). You also may be prompted to identify the edge cases by typing "SS" or "C" for simply supported and clamped respectively. Note: The reason that edge cases B, D, and E are not supported in this script is because there is no line given for determining Ks. You can calculate these cases by hand for uniaxial compression alone relatively easily by following 8-3 thru 8-5 and using the D (stiffness parameter) value from this script.
