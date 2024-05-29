@@ -29,7 +29,7 @@ format compact
 layup = [0,0,0,0,0];
 thickness = [0.02,0.02,0.02,0.02,0.02];
 material = [3,3,3,3,3];
-a = 20;
+a = 28;
 b = 6;
 Nc = 10;
 Ns = 200;
@@ -164,3 +164,6 @@ Ncr_s = (Ks*pi*pi*D)/(b^2);%shear allowable running load
 Rc = Nc/Ncr_c;
 Rs = Ns/Ncr_s;
 MS = (2/(Rc+sqrt((Rc^2)+4*(Rs^2))))-1;
+
+disp("  Panel results:")
+fprintf("Compression allowable: %.3f lb/in\nShear allowable: %.3flb/in\nMS: %.3f\n\n",Ncr_c,Ncr_s,MS)
