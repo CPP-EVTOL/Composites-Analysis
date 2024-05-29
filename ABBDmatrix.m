@@ -11,7 +11,7 @@ format compact
     %define the layup schedule (degrees) from top to bottom
     layup = [0,45,90,-45,0];
     %define layer thicknesses (in)
-    thickness = [0.1,0.1,0.1,0.1,0.1
+    thickness = [0.1,0.1,0.1,0.1,0.1];
     %define the material for each layer (index in the materialProperties.xlsx file)
     material = [1,1,1,1,1];
     %define the loading for the laminate [Nx,Ny,Nxy,Mx,My,Mxy] where runing
@@ -25,7 +25,7 @@ format compact
 layup = [45,-45,0,-45,45];
 thickness = [0.1,0.1,0.1,0.1,0.1];
 material = [3,3,3,3,3];
-load = [100000,0,0,0,0,0];
+load = [500,0,0,0,10,0];
 
 %==========================================================================
 
