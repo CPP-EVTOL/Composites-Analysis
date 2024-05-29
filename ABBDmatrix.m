@@ -2,10 +2,10 @@
 clear
 format compact
 
-%CLT program to find the ABBD matrix for a laminate. This is used in order
-%to relate running loads and moments into strains and curvature. Strains
-%are in/in and curvatures are in/rad. Define your laminate below as
-%shown in the following example:
+%This is a classical lamination thory program that determines the margins
+%of safety for each layer of a laminate. It does NOT consider stability,
+%only stress. Crippling and buckling must be analyzed separately.
+%Define your laminate and loading below as shown in the following example: 
 
 %{
     %define the layup schedule (degrees) from top to bottom
