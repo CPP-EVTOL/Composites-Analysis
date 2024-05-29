@@ -1,0 +1,19 @@
+Names and units for columns in materialProperties.csv
+vf:	fiber volume ratio				unitless
+E1:	Modulus, longitudinal				psi
+E2:	Modulus, transverse				psi
+G12:	Modulus, shear, in-plane			psi
+v12:	Poisson's ratio, in-plane			unitless
+v23:	Poisson's ratio, transverse			unitless
+a1:	Coef. of thermal expansion, longitudinal	in/in/F
+a1:	Coef. of thermal expansion, transverse		in/in/F
+B1:	Coef. of moisture expansion, longitudinal	in/in/lb/lb
+B2:	Coef. of moisture expansion, transverse		in/in/lb/lb
+F1t:	Strength, longitudinal, tensile, ultimate	psi
+F1c:	Strength, longitudinal, compressive, ultimate	psi
+F2t:	Strength, transverse, tensile, ultimate		psi
+F2c:	Strangth, transverse, compressive, ultimate	psi
+F12:	Strength, shear, in-plane, ultimate		psi
+F13:	Strength, shear, intralamanar			psi
+G1c:	Fracture toughness, mode 1			in*lb/sq.in
+G11c:	Fracture toughness, mode 2			in*lb/cu.in
