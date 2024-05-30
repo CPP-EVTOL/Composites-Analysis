@@ -27,3 +27,7 @@ Similar to the flat panel script, but for (you guessed it) a curved panel. Also 
 CylinderStability.m
 
 This script is used to get the allowables and MS for a composite cylinder under any combination of axial load, bending, and torsion. The inputs are axial load in lb, moment in in*lb, and torsion as a shear flow/running load in lb/in. The two outputs are max axial running load from compression+moment, allowable compression running load and allowable torsion running load. This script will also have you select values from plots.
+
+BeamBendingStiffness.m
+
+To find the deflection and slope of beams with different loadings and supports, you usually use the canned equations in appendix D of the various structures textbooks. For composites, there is no "E" so an equivelant EI is used (it's called Db). This script calculates the equivalent EI for a composite beam. It also finds the moment, deflection, and slope for case 1a of Appx.D since it's one of the most common (canteliever beam with a downward point load at one end).
