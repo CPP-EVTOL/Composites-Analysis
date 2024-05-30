@@ -23,3 +23,7 @@ This is a script that is used to find the buckling allowable of a flat panel. It
 CurvedPanelStability.m
 
 Similar to the flat panel script, but for (you guessed it) a curved panel. Also works for compression and shear, for simply supported or clamped edges. With this script, you will have to select a point on figures 8.3.1 and one from figures 8.3.2 thru 8.3.5 depending on your panel geometry.
+
+CylinderStability.m
+
+This script is used to get the allowables and MS for a composite cylinder under any combination of axial load, bending, and torsion. The inputs are axial load in lb, moment in in*lb, and torsion as a shear flow/running load in lb/in. The two outputs are max axial running load from compression+moment, allowable compression running load and allowable torsion running load. This script will also have you select values from plots.
