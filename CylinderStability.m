@@ -132,6 +132,7 @@ im5 = imread("CSH fig 8-4-6.jpg");
 
 %Kc
 xCoef = log10(Z)/5;
+titleString = "Select the y-value along the red line associated with your edge constraint (r/t = "+string(r/tlam)+")";
 if((r/tlam)>=100)&&((r/tlam)<=500)
     topLeft = [248,274];
     topRight = [2099,298];
@@ -144,7 +145,6 @@ if((r/tlam)>=100)&&((r/tlam)<=500)
 
     fig = figure;
     imshow(im1);
-    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -169,7 +169,6 @@ if((r/tlam)>500)&&((r/tlam)<=1000)
 
     fig = figure;
     imshow(im2);
-    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -194,7 +193,6 @@ if((r/tlam)>1000)&&((r/tlam)<=2000)
 
     fig = figure;
     imshow(im3);
-    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -219,7 +217,6 @@ if((r/tlam)>2000)
 
     fig = figure;
     imshow(im4);
-    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -265,4 +262,4 @@ Rt = Nxy/Ncr_t;
 MS = (2/(Rc+sqrt((Rc^2)+4*(Rt^2))))-1;
 
 disp("  Cylinder Results:")
-fprintf("Max compression runnung load: %.3f lb/in\nCompression Allowable: %.3f lb/in\nTorsion Allowable: %.3f lb/in\nMS: %.3f\n",Nmax,Ncr_c,Ncr_t,MS)
+fprintf("Max compression runnung load: %.3f lb/in\nCompression Allowable: %.3f lb/in\nTorsion Allowable: %.3f lb/in\nMS: %.3f\n\n",Nmax,Ncr_c,Ncr_t,MS)
