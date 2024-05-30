@@ -165,5 +165,5 @@ Rc = Nc/Ncr_c;
 Rs = Ns/Ncr_s;
 MS = (2/(Rc+sqrt((Rc^2)+4*(Rs^2))))-1;
 
-disp("  Panel results:")
+disp("  Flat Panel results:")
 fprintf("Compression allowable: %.3f lb/in\nShear allowable: %.3flb/in\nMS: %.3f\n\n",Ncr_c,Ncr_s,MS)
