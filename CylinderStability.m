@@ -17,7 +17,7 @@ format compact
     L = 36
     r = 5;
     %loading P = compression load (lb), M = moment (in*lb), Nxy
-    = torsion running load (lb/in);
+    = torsion running load (lb/in, it's really shear flow);
     P = 1;
     M = 10;
     Nxy = 1;
