@@ -2,8 +2,8 @@
 clear
 format compact
 
-%This is a program to determine the stability allowables of a curved plate
-%made of composite material loaded under uniaxial compression and/or shear.
+%This is a program to determine the stability allowables of a cylinder
+%loaded under uniaxial compression, torsion, and bending.
 %Define your laminate and loading below as shown in the following example:
 
 %{
@@ -13,40 +13,32 @@ format compact
     thickness = [0.1,0.1,0.1,0.1,0.1];
     %define the material for each layer (index in the materialProperties.xlsx file)
     material = [1,1,1,1,1];
-    %panel dimensions a = unloaded side, b = loaded side arc length (both in inches, always do it this way even if a<b).
-    a = 8;
-    b = 4;
-    %loading Nc and Ns are the compressive and shear running loads, lb/in
-    Nc = 1;
-    Ns = 0;
-    %define the edge constraints "C" = clamped, "SS" = simply supported
-    edges = "SS"
-    %define the panel radius (inches)
-    r = 10;
-    
+    %cylinder dimensions L = length, r = laminate midplane radius (both in inches)
+    L = 36
+    r = 5;
+    %loading P = compression load (lb), M = moment (in*lb), Nxy
+    = torsion running load (lb/in);
+    P = 1;
+    M = 10;
+    Nxy = 1;
 %}
 
 
 %============================== USER INPUT ================================
 
-layup = [45,-45,0,90,0,90,0,-45,45];
-thickness = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01];
-material = [1,1,1,1,1,1,1,1,1];
-a = 36;
-b = 14;
-Nc = 60;
-Ns = 10;
-edges = "SS";
-r = 5;
+layup = [0,90];
+thickness = [0.02,0.02];
+material = [1,1];
+L = 36;
+r = 8;
+P = 220;
+M = 0;
+Nxy = 0;
 
 %==========================================================================
 
 if (length(thickness)~=length(material))||(length(layup)~=length(material))||(length(layup)~=length(thickness))
     error("Check your inputs. The layup, thickness, material, and load matrices must be the same length");
-end
-
-if (edges~="SS")&&(edges~="C")
-    error("Invalid edge constraints. Edges must either be clamped 'C' or simply supported 'S'");
 end
 
 materialData = readtable("materialProperties.xlsx");
@@ -107,60 +99,69 @@ end
 veff = veff/nLayers;
 
 %find geometric parameter Z
-Z = ((b^2)/(r*tlam))*sqrt(1-(veff^2));
+Z = ((L^2)/(r*tlam))*sqrt(1-(veff^2));
 
-if(Z>1000)
-    error("Geometric parameter Z is too large. This could be caused by: Panel dimension b too large, radius too small, thickness too small, or poisson's ratio too large.")
+if(Z>(10^5))
+    error("Geometric parameter Z is too large. This could be caused by: Cylinder length too large, radius too small, thickness too small, or poisson's ratio too large.")
     %If this error occurs, don't just delete this line and try again
-    %anyway. The plots in section 8-9,10,11 do not have Kc or Ks values for
-    %Z above 1000 and something is wrong with your geometry.
+    %anyway. The plots in section 8-18,19,21 do not have Kc or Kt values for
+    %Z above 10^5 and something is wrong with your geometry.
 end
 
 if(Z<1)
-    error("Geometric parameter Z is too small. This could be caused by: Panel dimension b too small, radius too large, thickness too large, or poisson's ratio too small.")
+    error("Geometric parameter Z is too small. This could be caused by: Cylinder length too small, radius too large, thickness too large, or poisson's ratio too small.")
     %If this error occurs, don't just delete this line and try again
-    %anyway. The plots in section 8-9,10,11 do not have Kc or Ks values for
-    %Z above 1000 and something is wrong with your geometry.
+    %anyway. The plots in section 8-18,19,21 do not have Kc or Kt values for
+    %Z below 1 and something is wrong with your geometry.
 end
-%Get the Ks and Kc values for various edge length ratio cases and
-%constraints
+
+if((r/tlam)<100)
+    disp("CAUTION: r/t is too small for accurate compression results to be calculated.")
+    Kc = 1;
+end
+
+%Get the Kc and Kt values for various r/t values and edge constraints
 %NOTE: The original jpg images must be used. If they're changed then this
 %section of the code will not be calibrated and the selected K values will
 %be completely wrong.
+im1 = imread("CSH fig 8-4-1.jpg");
+im2 = imread("CSH fig 8-4-2.jpg");
+im3 = imread("CSH fig 8-4-3.jpg");
+im4 = imread("CSH fig 8-4-4.jpg");
+im5 = imread("CSH fig 8-4-6.jpg");
+
 %Kc
-im1 = imread("CSH fig 8-3-1.jpg");
-im2 = imread("CSH fig 8-3-2.jpg");
-im3 = imread("CSH fig 8-3-3.jpg");
-im4 = imread("CSH fig 8-3-4.jpg");
-im5 = imread("CSH fig 8-3-5.jpg");
+xCoef = log10(Z)/5;
+if((r/tlam)>=100)&&((r/tlam)<=500)
+    topLeft = [248,274];
+    topRight = [2099,298];
+    bottomLeft = [212,1672];
+    bottomRight = [2090,1690];
+    topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
+    bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
+    topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
+    bottomPy = xCoef*(bottomRight(2)-bottomLeft(2))+bottomLeft(2);
 
-xCoef = log10(Z)/4;
-topPx = xCoef*(2.687e3-269)+269;
-bottomPx = xCoef*(2.708e3-260)+260;
-topPy = xCoef*(107-86)+86;
-bottomPy = xCoef*(1.886e3-1.889e3)+1.889e3;
+    fig = figure;
+    imshow(im1);
+    titleString = "Select the y-value along the red line associated with your edge constraint";
+    title(titleString);
+    hold on
+    plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
+    [~,y] = ginput(1);
+    yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
+    yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
+    Kc = 10000^(mean([yCoef1,yCoef2]));
+    close(fig)
 
-fig = figure;
-imshow(im1);
-titleString = "Select the y-value along the red line associated with your r/t and ("+string(edges)+") edge constraints (Your r/t ="+string(r/tlam)+")";
-title(titleString);
-hold on
-plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
-[~,y] = ginput(1);
-yCoef1 = (y-1.889e3)/(86-1.889e3);
-yCoef2 = (y-1.886e3)/(107-1.886e3);
-Kc = 1000^(mean([yCoef1,yCoef2]));
-close(fig);
+    Ncr_c = (Kc*pi*pi*D)/(L^2);
+end
 
-Ncr_c = (Kc*pi*pi*D)/(b^2);
-
-%Ks
-xCoef = log10(Z)/3;
-if(a>=b)&&(edges=="SS")
-    topLeft = [475,80];
-    topRight = [2.2335e3,86];
-    bottomLeft = [427.5,1.883e3];
-    bottomRight = [2.2065e3,1.913e3];
+if((r/tlam)>500)&&((r/tlam)<=1000)
+    topLeft = [271.45,286.85];
+    topRight = [2193.5,337.83];
+    bottomLeft = [211.48,1813.1];
+    bottomRight = [2184.5,1849.1];
     topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
     bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
     topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
@@ -168,25 +169,24 @@ if(a>=b)&&(edges=="SS")
 
     fig = figure;
     imshow(im2);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
+    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
     [~,y] = ginput(1);
     yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
     yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
-    Ks = 1000^(mean([yCoef1,yCoef2]));
+    Kc = 10000^(mean([yCoef1,yCoef2]));
     close(fig)
 
-    Ncr_s = (Ks*pi*pi*D)/(b^2);
+    Ncr_c = (Kc*pi*pi*D)/(L^2);
 end
 
-%a and b switched here
-if(a<b)&&(edges=="SS")
-    topLeft = [467,43.5];
-    topRight = [2159,130.5];
-    bottomLeft = [419,1.864e3];
-    bottomRight = [2150,1.8735e3];
+if((r/tlam)>1000)&&((r/tlam)<=2000)
+    topLeft = [265,302];
+    topRight = [2062,314];
+    bottomLeft = [259,1781];
+    bottomRight = [2086,1769];
     topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
     bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
     topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
@@ -194,24 +194,24 @@ if(a<b)&&(edges=="SS")
 
     fig = figure;
     imshow(im3);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
+    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
     [~,y] = ginput(1);
     yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
     yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
-    Ks = 1000^(mean([yCoef1,yCoef2]));
+    Kc = 10000^(mean([yCoef1,yCoef2]));
     close(fig)
 
-    Ncr_s = (Ks*pi*pi*D)/(a^2);
+    Ncr_c = (Kc*pi*pi*D)/(L^2);
 end
 
-if(a>=b)&&(edges=="C")
-    topLeft = [242,103.5];
-    topRight = [2114,127.5];
-    bottomLeft = [233,1.9215e3];
-    bottomRight = [2096,1935.5];
+if((r/tlam)>2000)
+    topLeft = [301.87,316.79];
+    topRight = [2344,331.78];
+    bottomLeft = [283.88,1951.1];
+    bottomRight = [2341,1918];
     topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
     bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
     topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
@@ -219,49 +219,50 @@ if(a>=b)&&(edges=="C")
 
     fig = figure;
     imshow(im4);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
+    titleString = "Select the y-value along the red line associated with your edge constraint";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
     [~,y] = ginput(1);
     yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
     yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
-    Ks = 1000^(mean([yCoef1,yCoef2]));
+    Kc = 10000^(mean([yCoef1,yCoef2]));
     close(fig)
 
-    Ncr_s = (Ks*pi*pi*D)/(b^2);
+    Ncr_c = (Kc*pi*pi*D)/(L^2);
 end
 
-%a and b switched here
-if(a<b)&&(edges=="C")
-    topLeft = [277.758,94.8824];
-    topRight = [2178.1,97.8797];
-    bottomLeft = [280.7556,1938.3];
-    bottomRight = [2172.1,1917.3];
-    topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
-    bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
-    topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
-    bottomPy = xCoef*(bottomRight(2)-bottomLeft(2))+bottomLeft(2);
+%kt (torsion)
+topLeft = [191.5,65];
+topRight = [2.6255e3,89];
+bottomLeft = [171.5,1585];
+bottomRight = [2619.5,1579];
+topPx = xCoef*(topRight(1)-topLeft(1))+topLeft(1);
+bottomPx = xCoef*(bottomRight(1)-bottomLeft(1))+bottomLeft(1);
+topPy = xCoef*(topRight(2)-topLeft(2))+topLeft(2);
+bottomPy = xCoef*(bottomRight(2)-bottomLeft(2))+bottomLeft(2);
 
-    fig = figure;
-    imshow(im5);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
-    title(titleString);
-    hold on
-    plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
-    [~,y] = ginput(1);
-    yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
-    yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
-    Ks = 1000^(mean([yCoef1,yCoef2]));
-    close(fig)
+fig = figure;
+imshow(im5);
+titleString = "Select the y-value along the red line associated with your edge constraint";
+title(titleString);
+hold on
+plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
+[~,y] = ginput(1);
+yCoef1 = (y-bottomLeft(2))/(topLeft(2)-bottomLeft(2));
+yCoef2 = (y-bottomRight(2))/(topRight(2)-bottomRight(2));
+Kt = 1000^(mean([yCoef1,yCoef2]));
+close(fig)
 
-    Ncr_s = (Ks*pi*pi*D)/(a^2);
-end
+Ncr_t = (Kt*pi*pi*D)/(L^2);
 
-Rc = Nc/Ncr_c;
-Rs = Ns/Ncr_s;
+%get maximum running load from compression and moment
+Nmax = (P/(2*pi*r))+(M/(pi*r*r));
 
-MS = (2/(Rc+sqrt((Rc^2)+4*(Rs^2))))-1;
+Rc = Nmax/Ncr_c;
+Rt = Nxy/Ncr_t;
 
-disp("  Curved Panel Results:")
-fprintf("Compression Allowable: %.3f lb/in\nShear Allowable: %.3f lb/in\nMS: %.3f\n",Ncr_c,Ncr_s,MS)
+MS = (2/(Rc+sqrt((Rc^2)+4*(Rt^2))))-1;
+
+disp("  Cylinder Results:")
+fprintf("Max compression runnung load: %.3f lb/in\nCompression Allowable: %.3f lb/in\nTorsion Allowable: %.3f lb/in\nMS: %.3f\n",Nmax,Ncr_c,Ncr_t,MS)
