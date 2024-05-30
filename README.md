@@ -1,7 +1,11 @@
 What is this?
 
 This is a collection of scripts and resources for analyzing composite structures. The equations and methods used are from Dr. Coburn's Composite Strength Handbook 2nd edition (abbreviated CSH throughout).
-The purpose of these scripts are to allow people who haven't taken the composites class to do some basic analysis of parts with known layups and loadings. I've summarized each script below:
+The purpose of these scripts are to allow people who haven't taken the composites class to do some basic analysis of parts with known layups and loadings. I've summarized each script or file below:
+
+materialProperties.xlsx
+
+This contains all of the material data for different composite materials. It is referenced by each MATLAB script as well. A description of the different data points and their associated units is located in materialPropertiesInfo.txt. When testing new materials to get allowables, you don't need every one of these points. The important ones are: E1, E2, G12, F1t, F1c, F2t, F2c, and v12.
 
 CLTbasic.m
 
