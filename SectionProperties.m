@@ -9,7 +9,7 @@ format compact
 %3. Add a horizontal scale line anywhere on the image in red (255,0,0)
 %Any other colors are ignored, only pure white, black, and red will work.
 
-%Define your imputs as show in the following example:
+%Define your inputs as show in the following example:
 
 %{
     %Define the image file
