@@ -1,4 +1,4 @@
-Overview/What is all this?
+What is all this?
 
 This is a collection of scripts and resources for analyzing composite structures. The equations and methods used are from Dr. Coburn's Composite Strength Handbook 2nd edition (abbreviated CSH throughout).
 The purpose of these scripts are to allow people who haven't taken the composites class to do some basic analysis of parts with known layups and loadings. I've summarized each script or file below:
@@ -35,3 +35,6 @@ To find the deflection and slope of beams with different loadings and supports, 
 SectionProperties.m
 
 This script is used to find the section properties of an arbitrary section. If you have a wierd shape like an airfoil, fuselage cross section, etc, then use this script to get Ixx, Iyy, area, and the centroid. More detailed instructions are in the comments at the top of the .m file itself.
+
+
+Still not sure where to start? Take a look at Examples.docx
