@@ -4,9 +4,10 @@ format compact
 
 %This script is used to find the section properties of an arbitrary shape
 %(moments of inertia, area, centroid). To use it:
-%1. Create a blank white png image RGB(255,255,255)
-%2. Draw your section in black (0,0,0)
-%3. Add a horizontal scale line anywhere on the image in red (255,0,0)
+%1. Create a blank white png image RGB(255,255,255) using a tool such as
+%MS paint or any image editing program
+%2. Draw your section in black RGB(0,0,0)
+%3. Add a horizontal scale line anywhere on the image in red RGB(255,0,0)
 %Any other colors are ignored, only pure white, black, and red will work.
 
 %Define your inputs as show in the following example:
