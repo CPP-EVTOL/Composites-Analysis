@@ -31,3 +31,7 @@ This script is used to get the allowables and MS for a composite cylinder under 
 BeamBendingStiffness.m
 
 To find the deflection and slope of beams with different loadings and supports, you usually use the canned equations in appendix D of the various structures textbooks. For composites, there is no "E" so an equivelant EI is used (it's called Db). This script calculates the equivalent EI for a composite beam. It also finds the moment, deflection, and slope for case 1a of Appx.D since it's one of the most common (canteliever beam with a downward point load at one end).
+
+SectionProperties.m
+
+This script is used to find the section properties of an arbitrary section. If you have a wierd shape like an airfoil, fuselage cross section, etc, then use this script to get Ixx, Iyy, area, and the centroid. More detailed instructions are in the comments at the top of the .m file itself.
