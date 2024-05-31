@@ -16,7 +16,9 @@ format compact
     material = [1,1,1,1,1]; (Uni Glass/Epoxy=1, Uni Boron/Epoxy=2, etc.)
     %define the loading for the laminate [Nx,Ny,Nxy,Mx,My,Mxy] where runing
     loads are in lb/in and running moments are in lb. See CSH fig. 4.4.2
-    load = [0,0,0,0,0,0];
+    %If you have a force P in the X direction in lb you must divide it by
+    %the width of the panel to get Nx in lb/in
+    load = [100,0,0,0,0,0];
 %}
 
 %============================== USER INPUT ================================
