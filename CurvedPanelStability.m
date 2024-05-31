@@ -29,15 +29,15 @@ format compact
 
 %============================== USER INPUT ================================
 
-layup = [45,-45,0,90,0,90,0,-45,45];
-thickness = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01];
-material = [1,1,1,1,1,1,1,1,1];
-a = 36;
-b = 14;
-Nc = 60;
-Ns = 10;
+layup = [45,0,90,0,-45];
+thickness = [0.04,0.04,0.04,0.04,0.04];
+material = [1,1,1,1,1];
+a = 18;
+b = 10;
+Nc = 300;
+Ns = 0;
 edges = "SS";
-r = 5;
+r = 36;
 
 %==========================================================================
 
@@ -142,7 +142,7 @@ bottomPy = xCoef*(1.886e3-1.889e3)+1.889e3;
 
 fig = figure;
 imshow(im1);
-titleString = "Select the y-value along the red line associated with your r/t and ("+string(edges)+") edge constraints (Your r/t ="+string(r/tlam)+")";
+titleString = "Select (click) the y-value along the red line associated with your r/t and ("+string(edges)+") edge constraints (Your r/t ="+string(r/tlam)+")";
 title(titleString);
 hold on
 plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -168,7 +168,7 @@ if(a>=b)&&(edges=="SS")
 
     fig = figure;
     imshow(im2);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
+    titleString = "Select (click) the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -194,7 +194,7 @@ if(a<b)&&(edges=="SS")
 
     fig = figure;
     imshow(im3);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
+    titleString = "Select (click) the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -219,7 +219,7 @@ if(a>=b)&&(edges=="C")
 
     fig = figure;
     imshow(im4);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
+    titleString = "Select (click) the y-value along the red line associated with your a/b. (Your a/b ="+string(a/b)+")";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -245,7 +245,7 @@ if(a<b)&&(edges=="C")
 
     fig = figure;
     imshow(im5);
-    titleString = "Select the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
+    titleString = "Select (click) the y-value along the red line associated with your a/b. (Your a/b ="+string(b/a)+")";
     title(titleString);
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)

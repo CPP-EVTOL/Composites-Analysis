@@ -16,11 +16,11 @@ format compact
 
 %{
     %define the layup schedule (degrees) from top to bottom
-    layup = [0,45,90,-45,0];
+    layup = [45,-45,0,90,0,-45,45];
     %define layer thicknesses (in)
-    thickness = [0.1,0.1,0.1,0.1,0.1];
+    thickness = [0.04,0.04,0.04,0.04,0.04,0.04,0.04];
     %define the material for each layer (index in the materialProperties.xlsx file)
-    material = [1,1,1,1,1]; (Uni Glass/Epoxy=1, Uni Boron/Epoxy=2, etc.)
+    material = [1,1,1,1,1,1,1]; (Uni Glass/Epoxy=1, Uni Boron/Epoxy=2, etc.)
     %define the width of the beam (inches)
     b = 3;
     %define point load (lb)
@@ -32,12 +32,12 @@ format compact
 %============================== USER INPUT ================================
 %NOTE: Layers are numbered from the top down
 
-layup = [45,-45,0,90,0,90,0,-45,45];
-thickness = [0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02];
-material = [1,1,1,1,1,1,1,1,1];
-b = 3;
-P = 20;
-L = 10;
+layup = [45,-45,0,90,0,-45,45];
+thickness = [0.04,0.04,0.04,0.04,0.04,0.04,0.04];
+material = [1,1,1,1,1,1,1];
+b = 4;
+P = 15;
+L = 24;
 
 %==========================================================================
 

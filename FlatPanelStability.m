@@ -132,7 +132,7 @@ if ((a/b)<5)
     %get Kc from CSH fig. 8.2.6
     fig = figure;
     imshow(im1);
-    title("Select the y-value along the red line associated with your edge constraints (case A or C)")
+    title("Select (click) the y-value along the red line associated with your edge constraints (case A or C)")
     xlabel("CSH figure 8.2.6")
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
@@ -148,7 +148,7 @@ if ((a/b)<5)
     bottomPy = xCoef*(2009-2.045e3)+2.045e3;
     fig = figure;
     imshow(im2);
-    title("Select the y-value alond the red line associated with your edge constraints")
+    title("Select (click) the y-value alond the red line associated with your edge constraints")
     xlabel("CSH figure 8.2.7")
     hold on
     plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)

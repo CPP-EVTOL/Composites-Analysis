@@ -132,7 +132,7 @@ im5 = imread("CSH fig 8-4-6.jpg");
 
 %Kc
 xCoef = log10(Z)/5;
-titleString = "Select the y-value along the red line associated with your edge constraint (r/t = "+string(r/tlam)+")";
+titleString = "Select (click) the y-value along the red line associated with your edge constraint (r/t = "+string(r/tlam)+")";
 if((r/tlam)>=100)&&((r/tlam)<=500)
     topLeft = [248,274];
     topRight = [2099,298];
@@ -241,7 +241,7 @@ bottomPy = xCoef*(bottomRight(2)-bottomLeft(2))+bottomLeft(2);
 
 fig = figure;
 imshow(im5);
-titleString = "Select the y-value along the red line associated with your edge constraint";
+titleString = "Select (click) the y-value along the red line associated with your edge constraint";
 title(titleString);
 hold on
 plot([bottomPx,topPx],[bottomPy,topPy],'r--','LineWidth',2)
