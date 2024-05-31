@@ -28,6 +28,7 @@ format compact
 
 image = imread("ExampleSectionImage01.png");
 scaleLength = 3;
+
 forceCentroid = false;
 xCentroid = 0;
 yCentroid = 0;
