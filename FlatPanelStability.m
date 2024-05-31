@@ -14,7 +14,7 @@ format compact
     %define layer thicknesses (in)
     thickness = [0.1,0.1,0.1,0.1,0.1];
     %define the material for each layer (index in the materialProperties.xlsx file)
-    material = [1,1,1,1,1];
+    material = [1,1,1,1,1]; (Uni Glass/Epoxy=1, Uni Boron/Epoxy=2, etc.)
     %panel dimensions a = unloaded side, b = loaded side (both in inches)
     a = 8;
     b = 4;

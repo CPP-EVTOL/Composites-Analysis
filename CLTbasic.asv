@@ -13,7 +13,7 @@ format compact
     %define layer thicknesses (in)
     thickness = [0.1,0.1,0.1,0.1,0.1];
     %define the material for each layer (index in the materialProperties.xlsx file)
-    material = [1,1,1,1,1]; (Uni Glass/Epoxy=1, Uni Boron/Epoxy=2, etc.)
+    material = [1,1,1,1,1];
     %define the loading for the laminate [Nx,Ny,Nxy,Mx,My,Mxy] where runing
     loads are in lb/in and running moments are in lb. See CSH fig. 4.4.2
     load = [0,0,0,0,0,0];
@@ -22,10 +22,10 @@ format compact
 %============================== USER INPUT ================================
 %NOTE: Layers are numbered from the top down
 
-layup = [0,90,45];
+layup = [090,45];
 thickness = [0.08,0.08,0.08];
 material = [1,1,1];
-load = [500,0,0,0,0,0];
+load = [500,0,0,0,10,0];
 
 %==========================================================================
 
